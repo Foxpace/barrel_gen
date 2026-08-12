@@ -1,0 +1,35 @@
+targets:
+  $default:
+    sources:
+      - $package$
+      - lib/**
+      - apps/**
+      - modules/**
+      - packages/**
+    builders:
+      barrel_gen|barrel_gen:
+        enabled: true
+        options:
+          folder_barrels:
+            enabled: true
+            roots:
+              - lib
+            min_files: 2
+            recursive: true
+            barrel_name: "{directory}.dart"
+          package_barrel:
+            enabled: true
+            output: "lib/{package}.dart"
+          monorepo:
+            enabled: true
+            package_roots:
+              - packages
+              - modules
+            app_roots:
+              - apps
+            include_root: true
+          targets:
+            - root: lib/screens
+              output: lib/screens.dart
+              recursive: true
+              min_files: 1

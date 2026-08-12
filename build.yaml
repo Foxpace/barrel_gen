@@ -1,0 +1,31 @@
+builders:
+  barrel_gen:
+    import: package:barrel_gen/builder.dart
+    builder_factories:
+      - barrelBuilder
+    build_extensions:
+      $package$:
+        - .barrel_gen.stamp
+    auto_apply: dependents
+    build_to: cache
+    defaults:
+      options:
+        folder_barrels:
+          enabled: false
+          roots:
+            - lib
+          min_files: 2
+          recursive: true
+          barrel_name: "{directory}.dart"
+        package_barrel:
+          enabled: true
+          mode: single
+          output: "lib/{package}.dart"
+          nested_barrel_name: "{directory}.dart"
+        monorepo:
+          enabled: false
+          package_roots:
+            - packages
+          app_roots: []
+          include_root: false
+        targets: []

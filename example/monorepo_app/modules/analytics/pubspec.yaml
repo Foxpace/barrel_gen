@@ -1,0 +1,8 @@
+name: analytics
+description: Package fixture in a second package root.
+version: 0.1.0
+
+environment:
+  sdk: ^3.12.2
+
+resolution: workspace

@@ -1,0 +1,61 @@
+include: package:lints/recommended.yaml
+
+plugins:
+  lintel:
+    version: ^0.1.5
+    diagnostics:
+      dependency_direction: true
+      file_line_count: true
+      no_assignments_in_conditions: true
+      no_dynamic: true
+      no_global_mutable_state: true
+      no_non_null_assertions: true
+      no_self_assignment: true
+      no_self_comparison: true
+      prefer_contains_key: true
+
+analyzer:
+  exclude:
+    - example/**/.dart_tool/**
+    - example/**/build/**
+
+linter:
+  rules:
+    - always_declare_return_types
+    - always_put_control_body_on_new_line
+    - always_put_required_named_parameters_first
+    - avoid_catching_errors
+    - avoid_dynamic_calls
+    - avoid_field_initializers_in_const_classes
+    - avoid_positional_boolean_parameters
+    - avoid_slow_async_io
+    - avoid_void_async
+    - do_not_use_environment
+    - flutter_style_todos
+    - leading_newlines_in_multiline_strings
+    - matching_super_parameters
+    - no_runtimeType_toString
+    - omit_obvious_local_variable_types
+    - omit_obvious_property_types
+    - only_throw_errors
+    - prefer_const_constructors
+    - prefer_constructors_over_static_methods
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_int_literals
+    - prefer_mixin
+    - prefer_null_aware_method_calls
+    - prefer_void_to_null
+    - sort_pub_dependencies
+    - throw_in_finally
+    - unawaited_futures
+    - unnecessary_breaks
+    - unnecessary_raw_strings
+    - unnecessary_underscores
+    - use_colored_box
+    - use_decorated_box
+    - use_enums
+    - use_named_constants
+    - use_null_aware_elements
+    - use_to_and_as_if_applicable
+    - use_truncating_division

@@ -1,0 +1,8 @@
+name: admin_app
+description: Nested app fixture for multi-root barrel generation.
+version: 0.1.0
+
+environment:
+  sdk: ^3.12.2
+
+resolution: workspace

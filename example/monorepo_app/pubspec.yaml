@@ -1,0 +1,27 @@
+name: barrel_gen_example
+description: Demonstrates automatic barrel generation across a monorepo.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.2
+
+workspace:
+  - apps/*
+  - modules/*
+  - packages/*
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  barrel_gen:
+    path: ../..
+  build_runner: 2.7.1
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
