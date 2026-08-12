@@ -16,6 +16,7 @@ plugins:
 
 analyzer:
   exclude:
+    - example/monorepo_app/**
     - example/**/.dart_tool/**
     - example/**/build/**
 

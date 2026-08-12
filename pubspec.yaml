@@ -1,6 +1,6 @@
 name: barrel_gen
 description: Build-runner barrel generation for Dart and Flutter packages and monorepos.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/Foxpace/barrel_gen
 repository: https://github.com/Foxpace/barrel_gen
 issue_tracker: https://github.com/Foxpace/barrel_gen/issues
