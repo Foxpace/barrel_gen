@@ -192,6 +192,27 @@ exist.
 A standalone configuration file contains the same top-level option keys:
 `package_barrel`, `folder_barrels`, `monorepo`, and `targets`.
 
+## Programmatic API
+
+Use the public API when integrating generation into another Dart tool. A dry
+run plans the same writes and deletions without changing the filesystem:
+
+```dart
+import 'dart:io';
+
+import 'package:barrel_gen/barrel_gen.dart';
+
+final state = BarrelGenContainer().generator.generate(
+  configuration: const BarrelConfiguration.defaults().withDryRun(
+    dryRun: true,
+  ),
+  workspaceRoot: Directory.current.path,
+);
+```
+
+See [`example/barrel_gen_example.dart`](example/barrel_gen_example.dart) for a
+complete runnable example.
+
 ## Defaults
 
 | Option | Default |

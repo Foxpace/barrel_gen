@@ -78,13 +78,13 @@ void main() {
       );
 
       // When
-    final process = await Process.start(Platform.resolvedExecutable, [
-      p.join(Directory.current.path, 'bin/barrel_gen.dart'),
+      final process = await Process.start(Platform.resolvedExecutable, [
+        p.join(Directory.current.path, 'bin/barrel_gen.dart'),
         '--config',
         'tool/barrel_gen.yaml',
-      '--watch',
-    ], workingDirectory: packageDirectory.path);
-    watchProcess = process;
+        '--watch',
+      ], workingDirectory: packageDirectory.path);
+      watchProcess = process;
       final output = process.stdout
           .transform(const SystemEncoding().decoder)
           .asBroadcastStream();

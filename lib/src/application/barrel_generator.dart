@@ -6,11 +6,16 @@ import 'barrel_generation_state.dart';
 
 /// Runs barrel generation and returns either its summary or its failure.
 final class BarrelGenerator {
+  /// Creates a generator backed by the supplied filesystem and planner.
   const BarrelGenerator(this._fileSystem, this._planner);
 
   final BarrelFileSystem _fileSystem;
   final BarrelGenerationPlanner _planner;
 
+  /// Plans and optionally applies barrel changes below [workspaceRoot].
+  ///
+  /// Returns [BarrelGenerationCompleted] on success and
+  /// [BarrelGenerationFailed] when a handled exception occurs.
   BarrelGenerationState generate({
     required BarrelConfiguration configuration,
     required String workspaceRoot,

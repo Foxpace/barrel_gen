@@ -1,0 +1,79 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    # Tag pushes have no GitHub branch filter. The verify_main job below
+    # enforces that every release tag points to a commit contained in main.
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions: {}
+
+concurrency:
+  group: publish-to-pub-dev
+  cancel-in-progress: false
+
+jobs:
+  verify_main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify tag commit is on main
+        run: |
+          git fetch --no-tags origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - name: Verify release version
+        shell: bash
+        run: |
+          package_version="$(sed -nE 's/^version:[[:space:]]*([^[:space:]#]+).*$/\1/p' pubspec.yaml)"
+          tag_version="${GITHUB_REF_NAME#v}"
+
+          if [[ -z "$package_version" ]]; then
+            echo "Unable to read the package version from pubspec.yaml." >&2
+            exit 1
+          fi
+
+          if [[ "$tag_version" != "$package_version" ]]; then
+            echo "Tag version $tag_version does not match pubspec.yaml version $package_version." >&2
+            exit 1
+          fi
+
+          if ! grep -Fqx "## $package_version" CHANGELOG.md; then
+            echo "CHANGELOG.md has no entry for version $package_version." >&2
+            exit 1
+          fi
+
+  publish:
+    needs: verify_main
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
+    with:
+      environment: pub.dev
+
+  release:
+    needs:
+      - verify_main
+      - publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --generate-notes \
+            --notes "[Changelog on pub.dev](https://pub.dev/packages/barrel_gen/versions/${version}/changelog)" \
+            --verify-tag

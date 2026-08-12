@@ -10,6 +10,10 @@ import '../infrastructure/local_package_discovery.dart';
 
 /// Creates the production dependencies used to generate barrels.
 final class BarrelGenContainer {
+  /// Creates a ready-to-use generator and its dependency graph.
+  ///
+  /// The optional dependencies make it possible to embed or test generation
+  /// against custom storage and package-discovery implementations.
   factory BarrelGenContainer({
     BarrelFileSystem? fileSystem,
     PackageDiscovery? packageDiscovery,
@@ -36,5 +40,6 @@ final class BarrelGenContainer {
 
   const BarrelGenContainer._(this.generator);
 
+  /// Generator configured with the container's resolved dependencies.
   final BarrelGenerator generator;
 }
